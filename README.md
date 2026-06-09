@@ -14,7 +14,7 @@ The following is the architectural diagram of the iTestCloud framework.
 1. [iTestCloud Slide Presentation](artifacts/iTestCloud.pptx)
 2. [iTestCloud README](https://github.com/IBM/iTestCloud/blob/master/README.md)
 3. [Coding Standards](docs/coding_style.md)
-4. [Javadoc Standards](docs/javadoc_standards.md)
+4. [Javadoc Standards](docs/javadoc_standards.md) | [License](LICENSE)
 
 ## Configuration and Setup
 Please complete the following steps to setup and configure your system for developing automated UI tests using the iTestCloud framework.
@@ -46,4 +46,4 @@ A test scenario developed with the iTestCloud Framework can be executed in a num
 
 ---
 **Documentation Navigation:**
-[Home](README.md) | [Eclipse Setup](docs/eclipse_setup.md) | [Browser Setup](docs/browser_setup.md) | [Test Run Setup](docs/test_run_setup.md) | [Eclipse Execution](docs/eclipse_execution.md) | [Command Line Execution](docs/cmdln_execution.md) | [Jenkins Execution](docs/jenkins_execution.md) | [Jenkins Slave Setup](docs/jenkins_slave_setup.md) | [Scenario Development](docs/scenario_development.md) | [Test Scenarios](docs/test_scenarios.md) | [Coding Style](docs/coding_style.md) | [Javadoc Standards](docs/javadoc_standards.md)
+[Home](README.md) | [Eclipse Setup](docs/eclipse_setup.md) | [Browser Setup](docs/browser_setup.md) | [Test Run Setup](docs/test_run_setup.md) | [Eclipse Execution](docs/eclipse_execution.md) | [Command Line Execution](docs/cmdln_execution.md) | [Jenkins Execution](docs/jenkins_execution.md) | [Jenkins Slave Setup](docs/jenkins_slave_setup.md) | [Scenario Development](docs/scenario_development.md) | [Test Scenarios](docs/test_scenarios.md) | [Coding Style](docs/coding_style.md) | [Javadoc Standards](docs/javadoc_standards.md) | [License](LICENSE)

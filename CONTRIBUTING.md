@@ -78,8 +78,8 @@ Please refer to the [Eclipse Setup](docs/eclipse_setup.md) and [Browser Setup](d
 Please refer to the execution guides, such as [Eclipse Execution](docs/eclipse_execution.md), to learn how to test your changes.
 
 ## Coding style guidelines
-Please follow the guidelines defined in our [Coding Style](docs/coding_style.md) and [Javadoc Standards](docs/javadoc_standards.md) documentation.
+Please follow the guidelines defined in our [Coding Style](docs/coding_style.md) and [Javadoc Standards](docs/javadoc_standards.md) | [License](LICENSE) documentation.
 
 ---
 **Documentation Navigation:**
-[Home](README.md) | [Eclipse Setup](docs/eclipse_setup.md) | [Browser Setup](docs/browser_setup.md) | [Test Run Setup](docs/test_run_setup.md) | [Eclipse Execution](docs/eclipse_execution.md) | [Command Line Execution](docs/cmdln_execution.md) | [Jenkins Execution](docs/jenkins_execution.md) | [Jenkins Slave Setup](docs/jenkins_slave_setup.md) | [Scenario Development](docs/scenario_development.md) | [Test Scenarios](docs/test_scenarios.md) | [Coding Style](docs/coding_style.md) | [Javadoc Standards](docs/javadoc_standards.md)
+[Home](README.md) | [Eclipse Setup](docs/eclipse_setup.md) | [Browser Setup](docs/browser_setup.md) | [Test Run Setup](docs/test_run_setup.md) | [Eclipse Execution](docs/eclipse_execution.md) | [Command Line Execution](docs/cmdln_execution.md) | [Jenkins Execution](docs/jenkins_execution.md) | [Jenkins Slave Setup](docs/jenkins_slave_setup.md) | [Scenario Development](docs/scenario_development.md) | [Test Scenarios](docs/test_scenarios.md) | [Coding Style](docs/coding_style.md) | [Javadoc Standards](docs/javadoc_standards.md) | [License](LICENSE)
