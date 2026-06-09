@@ -1,26 +1,25 @@
-# DSX/DH Portal UI Test Automation Coverage
+# Test Scenarios
 The following test scenarios have been developed with the iTestCloud Framework by a number of teams and individuals.
 
-1. [DSX and DH Regression Scenario](https://github.ibm.com/iTestCloud/com.ibm.itest.cloud.apsportal.regression)
-2. [Documentation Scenario](https://github.ibm.com/iTestCloud/com.ibm.itest.cloud.apsportal.documentation)
-3. [Streaming Scenario](https://github.ibm.com/iTestCloud/com.ibm.itest.cloud.apsportal.streams)
-4. [Exchange Scenario](https://github.ibm.com/iTestCloud/com.ibm.itest.cloud.apsportal.exchange)
-5. [Catalog Scenario](https://github.ibm.com/iTestCloud/com.ibm.itest.cloud.apsportal.catalog)
+1. [Regression Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.regression)
+2. [Documentation Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.documentation)
+3. [Streaming Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.streams)
+4. [Exchange Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.exchange)
+5. [Catalog Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.catalog)
 
 ## Test Coverage
 The following are the areas, features and/or use cases validated by the above mentioned test scenarios. 
 
 ## Generic
 1. Validation of the home pages of the Data Hub and Data Science Experience
-1. User profile management and customization
-1. Object Storage creation, management, utilization and deletion
-1. Data-connection creation, management, sharing, utilization and deletion
-1. Creation, management, utilization and deletion of projects with Object Storage or catalogs
-1. Data connection inclusion, management and deletion within a project
-1. Collaborators inclusion, permission management and deletion within a project
-1. Validation for existence and deletion of bookmarks of community data sets, notebooks, articles and tutorials within a project
-1. Validation for existence and deletion of bookmarks of community data sets, notebooks, articles and tutorials within the Explore Community sidebar (menu)
-
+2. User profile management and customization
+3. Object Storage creation, management, utilization and deletion
+4. Data-connection creation, management, sharing, utilization and deletion
+5. Creation, management, utilization and deletion of projects with Object Storage or catalogs
+6. Data connection inclusion, management and deletion within a project
+7. Collaborators inclusion, permission management and deletion within a project
+8. Validation for existence and deletion of bookmarks of community data sets, notebooks, articles and tutorials within a project
+9. Validation for existence and deletion of bookmarks of community data sets, notebooks, articles and tutorials within the Explore Community sidebar (menu)
 ## Data Import
 1. Data services creation, management, utilization and deletion
 1. Data import from a CSV file on the local file system into a cloud data service
@@ -60,3 +59,7 @@ The following are the areas, features and/or use cases validated by the above me
 
 ### RStudio
 1. Validation for existence of various features such as disk usage bar, menu, and console
+
+---
+**Documentation Navigation:**
+[Home](../README.md) | [Eclipse Setup](eclipse_setup.md) | [Browser Setup](browser_setup.md) | [Test Run Setup](test_run_setup.md) | [Eclipse Execution](eclipse_execution.md) | [Command Line Execution](cmdln_execution.md) | [Jenkins Execution](jenkins_execution.md) | [Jenkins Slave Setup](jenkins_slave_setup.md) | [Scenario Development](scenario_development.md) | [Test Scenarios](test_scenarios.md) | [Coding Style](coding_style.md) | [Javadoc Standards](javadoc_standards.md)

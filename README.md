@@ -36,3 +36,14 @@ A test scenario developed with the iTestCloud Framework can be executed in a num
 1. [From Eclipse](docs/eclipse_execution.md)
 2. [From Command Line](docs/cmdln_execution.md)
 3. [From Jenkins](docs/jenkins_execution.md)
+
+## Disclaimer and Limitation of Liability
+> [!WARNING]
+> **Use at Your Own Risk**
+> This project is licensed under the **Apache License 2.0**. By using, reproducing, or distributing this code or any part of it, you acknowledge and agree that it is provided on an **"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND**, either express or implied.
+> 
+> The authors and contributors **DENY ALL LIABILITY** for any damages, including direct, indirect, special, incidental, or consequential damages, arising out of the use or inability to use this software. For full details, please refer to the [LICENSE](LICENSE) file.
+
+---
+**Documentation Navigation:**
+[Home](README.md) | [Eclipse Setup](docs/eclipse_setup.md) | [Browser Setup](docs/browser_setup.md) | [Test Run Setup](docs/test_run_setup.md) | [Eclipse Execution](docs/eclipse_execution.md) | [Command Line Execution](docs/cmdln_execution.md) | [Jenkins Execution](docs/jenkins_execution.md) | [Jenkins Slave Setup](docs/jenkins_slave_setup.md) | [Scenario Development](docs/scenario_development.md) | [Test Scenarios](docs/test_scenarios.md) | [Coding Style](docs/coding_style.md) | [Javadoc Standards](docs/javadoc_standards.md)

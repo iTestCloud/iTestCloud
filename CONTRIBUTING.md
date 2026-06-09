@@ -2,10 +2,10 @@
 Our project welcomes external contributions. If you have an itch, please feel
 free to scratch it.
 
-To contribute code or documentation, please submit a **FIXME** [pull request](https://github.com/ibm/repo-template/pulls).
+To contribute code or documentation, please submit a [pull request](https://github.com/IBM/iTestCloud/pulls).
 
 A good way to familiarize yourself with the codebase and contribution process is
-to look for and tackle low-hanging fruit in the **FIXME** [issue tracker](https://github.com/ibm/repo-template/issues).
+to look for and tackle low-hanging fruit in the [issue tracker](https://github.com/IBM/iTestCloud/issues).
 Before embarking on a more ambitious contribution, please quickly [get in touch](#communication) with us.
 
 **Note: We appreciate your effort, and want to avoid a situation where a contribution
@@ -14,14 +14,14 @@ cannot be accepted at all!**
 
 ### Proposing new features
 
-If you would like to implement a new feature, please **FIXME** [raise an issue](https://github.com/ibm/repo-template/issues)
+If you would like to implement a new feature, please [raise an issue](https://github.com/IBM/iTestCloud/issues)
 before sending a pull request so the feature can be discussed. This is to avoid
 you wasting your valuable time working on a feature that the project developers
 are not interested in accepting into the code base.
 
 ### Fixing bugs
 
-If you would like to fix a bug, please **FIXME** [raise an issue](https://github.com/ibm/repo-template/issues) before sending a
+If you would like to fix a bug, please [raise an issue](https://github.com/IBM/iTestCloud/issues) before sending a
 pull request so it can be tracked.
 
 ### Merge approval
@@ -69,16 +69,17 @@ git commit -s
 ```
 
 ## Communication
-**FIXME** Please feel free to connect with us on our [Slack channel](link).
+Please feel free to connect with us via Github issues.
 
 ## Setup
-**FIXME** Please add any special setup instructions for your project to help the developer
-become productive quickly.
+Please refer to the [Eclipse Setup](docs/eclipse_setup.md) and [Browser Setup](docs/browser_setup.md) guides to configure your environment.
 
 ## Testing
-**FIXME** Please provide information that helps the developer test any changes they make
-before submitting.
+Please refer to the execution guides, such as [Eclipse Execution](docs/eclipse_execution.md), to learn how to test your changes.
 
 ## Coding style guidelines
-**FIXME** Optional, but recommended: please share any specific style guidelines you might
-have for your project.
+Please follow the guidelines defined in our [Coding Style](docs/coding_style.md) and [Javadoc Standards](docs/javadoc_standards.md) documentation.
+
+---
+**Documentation Navigation:**
+[Home](README.md) | [Eclipse Setup](docs/eclipse_setup.md) | [Browser Setup](docs/browser_setup.md) | [Test Run Setup](docs/test_run_setup.md) | [Eclipse Execution](docs/eclipse_execution.md) | [Command Line Execution](docs/cmdln_execution.md) | [Jenkins Execution](docs/jenkins_execution.md) | [Jenkins Slave Setup](docs/jenkins_slave_setup.md) | [Scenario Development](docs/scenario_development.md) | [Test Scenarios](docs/test_scenarios.md) | [Coding Style](docs/coding_style.md) | [Javadoc Standards](docs/javadoc_standards.md)
