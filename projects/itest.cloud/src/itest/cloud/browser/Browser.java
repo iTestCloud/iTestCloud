@@ -1313,7 +1313,7 @@ private List<String> getDownloadDirContents() {
 	}
 
 	// If reached here, it implies that the tests are executed on the local host.
-	// Therefore, return a list of downloaded files on the lost host.
+	// Therefore, return a list of downloaded files on the local host.
 	final String[] files = this.downloadDir.list(new FilenameFilter() {
 		@Override
 		public boolean accept(final File dir, final String name) {
