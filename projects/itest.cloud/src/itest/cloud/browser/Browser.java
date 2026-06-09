@@ -1308,8 +1308,15 @@ private List<String> getDownloadDirContents() {
 	if(this.driver instanceof HasDownloads) {
     	// If reached here, it implies that the this method is invoked in a Selenium Grid configuration.
 		// Therefore, return a list of downloaded files on the remote computer (end node).
-		final List<String> files = ((HasDownloads) this.driver).getDownloadableFiles();
-		return (files != null) ? files : new ArrayList<String>(0 /*initialCapacity*/);
+		final List<HasDownloads.DownloadedFile> downloadedFiles = ((HasDownloads) this.driver).getDownloadedFiles();
+		if (downloadedFiles != null) {
+			final List<String> files = new ArrayList<String>(downloadedFiles.size());
+			for (HasDownloads.DownloadedFile file : downloadedFiles) {
+				files.add(file.getName());
+			}
+			return files;
+		}
+		return new ArrayList<String>(0 /*initialCapacity*/);
 	}
 
 	// If reached here, it implies that the tests are executed on the local host.
