@@ -13,7 +13,6 @@
  *********************************************************************/
 package itest.cloud.browser;
 
-import static itest.cloud.config.Timeouts.DOWNLOAD_START_TIMEOUT;
 import static itest.cloud.entity.BrowserType.*;
 import static itest.cloud.page.element.BrowserElement.MAX_RECOVERY_ATTEMPTS;
 import static itest.cloud.performance.PerfManager.PERFORMANCE_ENABLED;
@@ -801,36 +800,19 @@ public void doubleClick(final BrowserElement element) {
  * to the download directory on the client computer in a Selenium Grid configuration.
  */
 public File downloadFile(final Action triggerAction, final int timeout) {
-	long downloadTimeoutInMillis = -1; // Value -1 implies that this timeout needs to be set after the downloading has started.
-	long downloadStartTimeoutInMillis = DOWNLOAD_START_TIMEOUT * 1000 + System.currentTimeMillis();
-
 	// Record the contents of the download directory before initiating the download.
 	final List<String> initialDownloadDirContents = getDownloadDirContents();
 	// Perform the trigger action to initiate the download.
 	triggerAction.perform();
 	// Monitor the progress of the downloading.
+	final long downloadTimeoutInMillis = timeout * 60 * 1000 + System.currentTimeMillis();
+
 	while (true) {
-		// Obtained the new file appeared in the download directory.
+		// Check if a new file is in the download directory.
 		final String newFileName = getNewlyDownloadedFile(initialDownloadDirContents);
 
-		// Check if the downloading has not started before reaching the corresponding timeout.
-		if((newFileName == null) && (System.currentTimeMillis() > downloadStartTimeoutInMillis)) {
-			throw new WaitElementTimeoutError("Downloading of file did not start before reaching timeout '" + DOWNLOAD_START_TIMEOUT + "' seconds.");
-		}
-
-		// Check if the downloading has started.
-		if (newFileName != null) {
-			// If so, set the download timeout if the downloading has just started.
-			if(downloadTimeoutInMillis < 0) {
-				downloadTimeoutInMillis = timeout * 60 * 1000 + System.currentTimeMillis();
-			}
-			// Check if the downloading has not completed before reaching the corresponding timeout.
-			else if(System.currentTimeMillis() > downloadTimeoutInMillis) {
-				throw new ScenarioFailedError("Downloading of file '" + newFileName + "' did not complete before reaching timeout '" + timeout + "' seconds.");
-			}
-		}
-		// The desired file can not be temporary or empty.
-		if((newFileName != null) && !isTemporaryFile(newFileName)) {
+		if(newFileName != null) {
+			// If reached here, it implies that a new file is in the download directory and it's not temporary or empty.
 			if(this.driver instanceof HasDownloads) {
 				// If reached here, it implies that the file download is occurring on the remote computer (end node) in a Selenium Grid configuration.
 				try {
@@ -841,9 +823,13 @@ public File downloadFile(final Action triggerAction, final int timeout) {
 					throw new ScenarioFailedError(e);
 				}
 			}
-			final File newFile = new File(this.downloadDir, newFileName);
-			// An empty file implies that the downloading is in progress. Therefore, poll until the downloading is completed.
-			if (newFile.length() > 0) return newFile;
+
+			return new File(this.downloadDir, newFileName);
+		}
+
+		// Check if the downloading has not completed before reaching the timeout.
+		if(System.currentTimeMillis() > downloadTimeoutInMillis) {
+			throw new ScenarioFailedError("Downloading of file '" + newFileName + "' did not complete before reaching timeout '" + timeout + "' seconds.");
 		}
 	}
 }
@@ -1299,9 +1285,11 @@ public File getDownloadDir(){
  * Return a list of file names in the download directory.
  * <p>
  * This method is capable of handling a file download on the local host and in a Selenium Grid configuration.
+ * Temporary or empty files are ignored by this method.
  * </p>
  *
  * @return A list of file names in the download directory as {@link String}.
+ * Each file in the list is not temporary or empty.
  * The returned list will be empty if the download directory is empty or nonexistence.
  */
 private List<String> getDownloadDirContents() {
@@ -1309,10 +1297,16 @@ private List<String> getDownloadDirContents() {
     	// If reached here, it implies that the this method is invoked in a Selenium Grid configuration.
 		// Therefore, return a list of downloaded files on the remote computer (end node).
 		final List<HasDownloads.DownloadedFile> downloadedFiles = ((HasDownloads) this.driver).getDownloadedFiles();
+
 		if (downloadedFiles != null) {
 			final List<String> files = new ArrayList<String>(downloadedFiles.size());
+
 			for (HasDownloads.DownloadedFile file : downloadedFiles) {
-				files.add(file.getName());
+				final String fileName = file.getName();
+				// The file can not be temporary or empty.
+				if(!isTemporaryFile(fileName) && file.getSize() > 0) {
+					files.add(fileName);
+				}
 			}
 			return files;
 		}
@@ -1324,7 +1318,9 @@ private List<String> getDownloadDirContents() {
 	final String[] files = this.downloadDir.list(new FilenameFilter() {
 		@Override
 		public boolean accept(final File dir, final String name) {
-			return new File(dir, name).isFile();
+			final File file = new File(dir, name);
+			// It must be a file and the file can not be temporary or empty.
+			return file.isFile() && !isTemporaryFile(name) && file.length() > 0;
 		}
 	});
 
@@ -1364,12 +1360,17 @@ public String getName() {
 
 /**
  * Return a newly downloaded file in the download directory.
+ * <p>
+ * This method is capable of handling a file download on the local host and in a Selenium Grid configuration.
+ * Temporary or empty files are ignored by this method.
+ * </p>
  *
  * @param initialDownloadDirContents A list of file names existed in the download directory
  * prior to the new file from appearing.
  *
  * @return The name of the newly downloaded file in the download directory as {@link String} or
  * <code>null</code> if a new file could not be found in the download directory.
+ * The returned file is not temporary or empty.
  */
 private String getNewlyDownloadedFile(final List<String> initialDownloadDirContents) {
 	final List<String> currentDownloadDirContents = getDownloadDirContents();
