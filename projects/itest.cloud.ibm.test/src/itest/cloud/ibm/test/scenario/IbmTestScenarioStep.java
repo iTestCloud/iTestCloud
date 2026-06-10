@@ -13,15 +13,13 @@
  *********************************************************************/
 package itest.cloud.ibm.test.scenario;
 
-import org.junit.runner.RunWith;
-
 import itest.cloud.ibm.scenario.IbmScenarioStep;
-import itest.cloud.scenario.ScenarioStepRunner;
 
 /**
  * Manage common functionalities to any scenario step.
  */
-@RunWith(ScenarioStepRunner.class)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 public class IbmTestScenarioStep extends IbmScenarioStep implements IbmTestScenarioConstants {
 
 /**

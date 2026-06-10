@@ -15,9 +15,10 @@ package itest.cloud.scenario.error;
 
 import static itest.cloud.scenario.ScenarioUtil.*;
 
+import org.opentest4j.AssertionFailedError;
+
 import itest.cloud.page.dialog.Dialog;
 import itest.cloud.scenario.ScenarioUtil;
-import junit.framework.AssertionFailedError;
 
 /**
  * Manage scenario failure.

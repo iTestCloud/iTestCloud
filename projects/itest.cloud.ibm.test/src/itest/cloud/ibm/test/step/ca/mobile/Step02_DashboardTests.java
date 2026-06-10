@@ -16,14 +16,10 @@ package itest.cloud.ibm.test.step.ca.mobile;
 import static itest.cloud.ibm.entity.mobile.AssetContext.TEAM_CONTENT;
 import static itest.cloud.scenario.ScenarioDataConstants.CLASS_INDICATOR_OF_DEPENDENCY;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.*;
 
 import itest.cloud.annotation.Dependency;
 import itest.cloud.ibm.scenario.ca.mobile.CaMobileScenarioStep;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 
 /**
  * This class defines a set of tests to validate dashboards and their associated functionality.
@@ -34,8 +30,9 @@ import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class Step02_DashboardTests extends CaMobileScenarioStep {
 
 	private static final String TEST_PIN_CHART_FROM_DASHBOARD_IN_BOARD3 = CLASS_INDICATOR_OF_DEPENDENCY + ".test03_PinChartFromDashboardInBoard3";

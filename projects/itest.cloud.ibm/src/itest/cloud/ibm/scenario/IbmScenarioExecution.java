@@ -12,14 +12,14 @@
  * limitations under the License.
  *********************************************************************/
 package itest.cloud.ibm.scenario;
+import java.lang.reflect.Method;
+import org.junit.jupiter.api.extension.InvocationInterceptor.Invocation;
 
 import static itest.cloud.scenario.ScenarioUtil.*;
 
 import java.io.File;
 import java.util.Properties;
 
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.Statement;
 
 import itest.cloud.ibm.config.IbmConfig;
 import itest.cloud.ibm.config.IbmConstants;
@@ -124,8 +124,8 @@ protected void logTestFailure(final Throwable throwable) throws Throwable {
 }
 
 @Override
-public void runTest(final Statement statement, final FrameworkMethod frameworkMethod, final Object target, final boolean isNewStep) throws Throwable {
-	super.runTest(statement, frameworkMethod, target, isNewStep);
+public void runTest(final Invocation<Void> invocation, final Method method, final Object target, final boolean isNewStep) throws Throwable {
+	super.runTest(invocation, method, target, isNewStep);
 	if (this.delay > 0) sleep(this.delay);
 }
 }

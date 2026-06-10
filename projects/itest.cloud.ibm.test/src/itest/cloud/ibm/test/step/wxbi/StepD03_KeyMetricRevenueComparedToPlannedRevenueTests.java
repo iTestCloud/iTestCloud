@@ -13,12 +13,10 @@
  *********************************************************************/
 package itest.cloud.ibm.test.step.wxbi;
 
-import org.junit.FixMethodOrder;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import itest.cloud.ibm.annotation.wxbi.CloudTest;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 
 /**
  * This class defines a set of tests for validating various aspects of the key metric 'Revenue compared to planned revenue'.
@@ -30,8 +28,9 @@ import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
  * </p>
  */
 @CloudTest
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepD03_KeyMetricRevenueComparedToPlannedRevenueTests extends StepXX_DefaultKeyMetricTests {
 
 @Override

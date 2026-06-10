@@ -13,13 +13,9 @@
  *********************************************************************/
 package itest.cloud.ibm.test.step.ca.mobile;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.*;
 
 import itest.cloud.ibm.scenario.ca.mobile.CaMobileScenarioStep;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 
 /**
  * This class defines a set of tests to validate boards and their associated functionality.
@@ -30,8 +26,9 @@ import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class Step01_BoardTests extends CaMobileScenarioStep {
 
 	private static final String BOARD1 = "Automation Board 1";

@@ -13,16 +13,12 @@
  *********************************************************************/
 package itest.cloud.ibm.test.scenario.ca;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
 import itest.cloud.annotation.Scenario;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioRunner;
 import itest.cloud.ibm.test.step.ca.Step01_PrerequisitesTests;
 
 @Scenario("Cognos Analytics Regression Scenario")
-@RunWith(IbmTestScenarioRunner.class)
-@SuiteClasses({
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({
 	Step01_PrerequisitesTests.class
 })
 public class CaRegressionScenario {

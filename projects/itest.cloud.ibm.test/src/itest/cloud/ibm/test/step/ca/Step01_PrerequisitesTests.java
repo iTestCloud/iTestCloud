@@ -13,12 +13,8 @@
  *********************************************************************/
 package itest.cloud.ibm.test.step.ca;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.*;
 
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 import itest.cloud.ibm.test.scenario.ca.CaTestScenarioStep;
 
 /**
@@ -30,8 +26,9 @@ import itest.cloud.ibm.test.scenario.ca.CaTestScenarioStep;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class Step01_PrerequisitesTests extends CaTestScenarioStep {
 
 	private static final String REPORT_PATH = "Samples/By business function/Customer experience/Reports/Daily agent activity";

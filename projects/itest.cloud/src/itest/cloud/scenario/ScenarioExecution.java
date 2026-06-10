@@ -21,13 +21,13 @@ import static java.lang.Boolean.TRUE;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
-import org.junit.AssumptionViolatedException;
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.Statement;
+import org.junit.jupiter.api.extension.InvocationInterceptor.Invocation;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.UnreachableBrowserException;
+import org.opentest4j.TestAbortedException;
 
 import itest.cloud.annotation.*;
 import itest.cloud.browser.Browser;
@@ -127,7 +127,7 @@ public abstract class ScenarioExecution implements ScenarioDataConstants {
 	private final int browserErrorsThreshold;
 	private boolean shouldStop = false;
 	private boolean singleStep = false;
-	private List<FrameworkMethod> mandatoryTests = new ArrayList<FrameworkMethod>();
+	private List<Method> mandatoryTests = new ArrayList<Method>();
 	private boolean slowServer = false;
 	private final boolean stopOnException;
 	private final boolean closeBrowserOnExit;
@@ -179,7 +179,7 @@ public ScenarioExecution() {
  *
  * @param tests The mandatory tests to add
  */
-public void addMandatoryTests(final List<FrameworkMethod> tests) {
+public void addMandatoryTests(final List<Method> tests) {
 	this.mandatoryTests.addAll(tests);
 }
 
@@ -321,27 +321,27 @@ public Topology getTopology() {
 	return this.config.getTopology();
 }
 
-private void handleAlert(final FrameworkMethod frameworkMethod, final WebDriverException wde) throws Throwable {
+private void handleAlert(final Method method, final WebDriverException wde) throws Throwable {
 	this.blemishes.alerts++;
 	printException(wde);
 	getBrowser().purgeAlert("Running test "+this.testName, 0);
 	if (this.blemishes.alerts > this.alertsThreshold) {
 		takeSnapshotFailure();
-		this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+		this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 		logTestFailure(wde);
 	}
 	println("WORKAROUND: Try to run the test again in case the alert was a transient issue...");
 	takeSnapshotWarning(); // take a snapshot just to notify the warning
 }
 
-private void handleBrowserError(final Statement statement, final FrameworkMethod frameworkMethod, final Object target, final boolean isNotRerunnable, final long start, final Throwable e) throws Throwable {
+private void handleBrowserError(final Invocation<Void> statement, final Method method, final Object target, final boolean isNotRerunnable, final long start, final Throwable e) throws Throwable {
 	this.blemishes.browserErrors++;
 	Page currentPage = Page.getCurrentPage();
 	manageFailure(start, e, isNotRerunnable && (currentPage != null));
 	if (this.blemishes.browserErrors >= this.browserErrorsThreshold) {
 		println("Too many browser errors occurred during scenario execution, give up.");
 		takeSnapshotInfo(e.toString());
-		this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+		this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 		// Restart the browser in case that can help for next test to proceed properly.
 		// However, restarting the browser may not be possible if the tests are executed on a remote host
 		// while using a Selenium Grid for example. In such a situation, simply refresh the current web
@@ -377,7 +377,7 @@ private void handleBrowserError(final Statement statement, final FrameworkMethod
 
 	// Re-run the test
 	println("		  -> Re-run the test...");
-	rerunTest(statement, frameworkMethod, target);
+	rerunTest(statement, method, target);
 }
 
 /**
@@ -517,16 +517,16 @@ private void recordTestResult(final String test, final Boolean result) {
  * <b>Design Needs finalization</b>
  * </p>
  */
-public void rerunTest(final Statement statement, final FrameworkMethod frameworkMethod, final Object target) throws Throwable {
-	runTest(statement, frameworkMethod, target, false /*isNewStep*/, false /*isFirstRun*/);
+public void rerunTest(final Invocation<Void> statement, final Method method, final Object target) throws Throwable {
+	runTest(statement, method, target, false /*isNewStep*/, false /*isFirstRun*/);
 }
 
 /**
  * Run the current test and take specific actions when some typical exception
  * or error occurs (e.g. take a snapshot when a error occurs, retry when allowed).
  */
-public void runTest(final Statement statement, final FrameworkMethod frameworkMethod, final Object target, final boolean isNewStep) throws Throwable {
-	runTest(statement, frameworkMethod, target, isNewStep, true /*isFirstRun*/);
+public void runTest(final Invocation<Void> statement, final Method method, final Object target, final boolean isNewStep) throws Throwable {
+	runTest(statement, method, target, isNewStep, true /*isFirstRun*/);
 }
 
 /**
@@ -536,10 +536,10 @@ public void runTest(final Statement statement, final FrameworkMethod frameworkMe
  * <b>Design Needs finalization</b>
  * </p>
  */
-private void runTest(final Statement statement, final FrameworkMethod frameworkMethod, final Object target, final boolean isNewStep, final boolean isFirstRun) throws Throwable {
+private void runTest(final Invocation<Void> statement, final Method method, final Object target, final boolean isNewStep, final boolean isFirstRun) throws Throwable {
 	// Store names
 	setStepName(target, isNewStep);
-	setTestName(frameworkMethod.getName());
+	setTestName(method.getName());
 	setPackageName(target);
 
 	// Store performances information if necessary
@@ -555,7 +555,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 	}
 
 	// Record the re-runnable status.
-	boolean isNotRerunnable = frameworkMethod.getAnnotation(NotRerunnable.class) != null;
+	boolean isNotRerunnable = method.getAnnotation(NotRerunnable.class) != null;
 
 	// Record the initial result of the test to FALSE in advance.
 	final String qualifiedTestName = target.getClass().getName() + "." + this.testName;
@@ -566,29 +566,29 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 
 	try {
 		// Check if the dependent tests have passed.
-		verifyDependencies(frameworkMethod, target);
+		verifyDependencies(method, target);
 
 		// Run the test unless the sole purpose of the test execution is to merely validate the dependencies between tests.
-		if(!this.verifyDependenciesOnly) statement.evaluate();
+		if(!this.verifyDependenciesOnly) statement.proceed();
 
 		// The test has passed. Update the result accordingly.
 		recordTestResult(qualifiedTestName, TRUE);
 
 		// Individual tests may be annotated to check server speed.
-		CheckServerSpeed annotation = frameworkMethod.getAnnotation(CheckServerSpeed.class);
+		CheckServerSpeed annotation = method.getAnnotation(CheckServerSpeed.class);
 		if (annotation != null) {
 			checkServerSpeed(start, annotation.value());
 		}
 
 		println("	  -> OK (in "+elapsedTimeString(start)+")");
 	}
-	catch(AssumptionViolatedException ave) {
+	catch(TestAbortedException ave) {
 		manageFailure(start, ave, false /*isNotRerunnable*/);
 		throw ave;
 	}
 	catch (UnhandledAlertException uae) {
-		handleAlert(frameworkMethod, uae);
-		rerunTest(statement, frameworkMethod,target);
+		handleAlert(method, uae);
+		rerunTest(statement, method,target);
 	}
 	catch (UnreachableBrowserException ube) {
 		this.blemishes.browserErrors++;
@@ -606,17 +606,17 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		if(currentPage != null) currentPage.startNewBrowserSession();
 		// Re-run the test
 		println("		  -> Re-run the test...");
-		rerunTest(statement, frameworkMethod, target);
+		rerunTest(statement, method, target);
 	}
 	catch (StaleElementReferenceException sere) {
 		// Handle the StaleElementReferenceException as a BrowserError.
 		println(getClassSimpleName(sere.getClass()) + " occurred. As a result, it'll be handled as a " + getClassSimpleName(BrowserError.class) + " instead.");
-		handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, sere);
+		handleBrowserError(statement, method, target, isNotRerunnable, start, sere);
 	}
 	catch (WebDriverException wde) {
 		String message = wde.getMessage();
 		if (message.matches(JAVASCRIPT_ERROR_ALERT_PATTERN)) {
-			handleAlert(frameworkMethod, wde);
+			handleAlert(method, wde);
 		}
 		else if (isBrowserCrashedMessage(message)) {
 			this.blemishes.browserErrors++;
@@ -639,7 +639,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 			manageFailure(start, wde, isNotRerunnable);
 			if (this.blemishes.failures >= this.failuresThreshold) {
 				takeSnapshotFailure();
-				this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+				this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 				logTestFailure(wde);
 			}
 			println("WORKAROUND: Try to run the test again in case this was a transient issue...");
@@ -650,12 +650,12 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		}
 		// Re-run the test
 		println("		  -> Re-run the test...");
-		rerunTest(statement, frameworkMethod, target);
+		rerunTest(statement, method, target);
 	}
 	catch (IncorrectTitleError ite) {
 		// Handle the IncorrectTitleError as a BrowserError.
 		println(getClassSimpleName(ite.getClass()) + " occurred. As a result, it'll be handled as a " + getClassSimpleName(BrowserError.class) + " instead.");
-		handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, ite);
+		handleBrowserError(statement, method, target, isNotRerunnable, start, ite);
 	}
 	catch (WaitElementTimeoutError wete) {
 		Page currentPage = Page.getCurrentPage();
@@ -668,7 +668,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 			if (this.blemishes.timeouts >= this.timeoutsThreshold) {
 				println("Too many timeout errors occurred during scenario execution, give up.");
 				takeSnapshotFailure();
-				this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+				this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 				logTestFailure(wete);
 			}
 			println("WORKAROUND: Try to run the test again in case this was a transient issue...");
@@ -680,20 +680,20 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 			if(currentPage.isInApplicationContext()) {
 				// Re-run the test
 				println("		  -> Re-run the test...");
-				rerunTest(statement, frameworkMethod, target);
+				rerunTest(statement, method, target);
 			}
 			else {
 				// If the current web page is not in the context of the application, it implies that the current page can be
 				// some type of error page. Therefore, handle the WaitElementTimeoutError as a BrowserError.
 				println("Web page was out of scope/context of application after refreshing browser. As a result, it'll be handled as a " + getClassSimpleName(BrowserError.class) + " instead.");
-				handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, wete);
+				handleBrowserError(statement, method, target, isNotRerunnable, start, wete);
 			}
 		}
 		else {
 			// If the current web page is not in the context of the application, it implies that the current page can be
 			// some type of error page. Therefore, handle the WaitElementTimeoutError as a BrowserError.
 			println(getClassSimpleName(wete.getClass()) + " occurred since web page was out of scope/context of application. As a result, it'll be handled as a " + getClassSimpleName(BrowserError.class) + " instead.");
-			handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, wete);
+			handleBrowserError(statement, method, target, isNotRerunnable, start, wete);
 		}
 	}
 	catch (InvocationTargetException ite) {
@@ -703,7 +703,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		if (this.blemishes.invocations >= this.invocationsThreshold) {
 			println("Too many invocation target exceptions occurred during scenario execution, give up.");
 			takeSnapshotFailure();
-			this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+			this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 			// Restart browser in case that can help for next test to proceed properly...
 			if(currentPage != null) currentPage.startNewBrowserSession();
 			logTestFailure(ite);
@@ -715,7 +715,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		if(currentPage != null) currentPage.startNewBrowserSession();
 		// Re-run the test
 		println("		  -> Re-run the test...");
-		rerunTest(statement, frameworkMethod, target);
+		rerunTest(statement, method, target);
 	}
 	catch (MultipleVisibleElementsError mvee) {
 		this.blemishes.multiples++;
@@ -724,7 +724,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		if (this.blemishes.multiples >= this.multiplesThreshold) {
 			println("Too many multiple elements errors occurred during scenario execution, give up.");
 			takeSnapshotFailure();
-			this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+			this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 			logTestFailure(mvee);
 		}
 		println("WORKAROUND: Try to run the test again in case this was a transient issue...");
@@ -734,7 +734,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		try { currentPage.refresh(); } catch (Throwable t) {}
 		// Re-run the test
 		println("		  -> Re-run the test...");
-		rerunTest(statement, frameworkMethod, target);
+		rerunTest(statement, method, target);
 	}
 	catch (ExistingDataError ede) {
 		manageFailure(start, ede, false/*test won't be rerun*/);
@@ -753,7 +753,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		// Take snapshot with error details expanded
 		sme.showDetails();
 		takeSnapshotFailure();
-		this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(frameworkMethod);
+		this.shouldStop = this.stopOnFailure || this.mandatoryTests.contains(method);
 		logTestFailure(sme);
 	}
 	catch (BrowserConnectionError bce) {
@@ -777,21 +777,21 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 	catch (BrowserUrlUnchangedError buue) {
 		// Handle the BrowserUrlUnchangedError as a BrowserError.
 		println(getClassSimpleName(buue.getClass()) + " occurred. As a result, it'll be handled as a " + getClassSimpleName(BrowserError.class) + " instead.");
-		handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, buue);
+		handleBrowserError(statement, method, target, isNotRerunnable, start, buue);
 	}
 	catch (ClassCastException cce) {
 		// Handle the ClassCastException as a BrowserError.
 		println(getClassSimpleName(cce.getClass()) + " occurred. As a result, it'll be handled as a " + getClassSimpleName(BrowserError.class) + " instead.");
-		handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, cce);
+		handleBrowserError(statement, method, target, isNotRerunnable, start, cce);
 	}
 	catch (BrowserError be) {
-		handleBrowserError(statement, frameworkMethod, target, isNotRerunnable, start, be);
+		handleBrowserError(statement, method, target, isNotRerunnable, start, be);
 	}
 	catch (Error err) {
 		// Basic failure management for any kind of other error (including ScenarioFailedError)
 		manageFailure(start, err, false/*test won't be rerun*/);
 		takeSnapshotFailure();
-		boolean mandatoryTest = this.mandatoryTests.contains(frameworkMethod);
+		boolean mandatoryTest = this.mandatoryTests.contains(method);
 		this.shouldStop = this.stopOnFailure || mandatoryTest;
 		if (this.shouldStop) {
 			String reason = getShouldStopReason(mandatoryTest);
@@ -803,7 +803,7 @@ private void runTest(final Statement statement, final FrameworkMethod frameworkM
 		// Basic exception management
 		manageFailure(start, ex, false/*test won't be rerun*/);
 		takeSnapshotFailure();
-		boolean mandatoryTest = this.mandatoryTests.contains(frameworkMethod);
+		boolean mandatoryTest = this.mandatoryTests.contains(method);
 		this.shouldStop = this.stopOnException || mandatoryTest;
 		if (this.shouldStop) {
 			String reason = getShouldStopReason(mandatoryTest);
@@ -921,11 +921,11 @@ public String toString() {
 	return this.stepName + "." + this.testName;
 }
 
-private void verifyDependencies(final FrameworkMethod frameworkMethod, final Object target) {
+private void verifyDependencies(final Method method, final Object target) {
 	// If asked not to verify dependencies (while debugging for example), simply return.
 	if(!this.verifyDependencies) return;
 	// Verify dependencies otherwise.
-	Dependency dependency = frameworkMethod.getAnnotation(Dependency.class);
+	Dependency dependency = method.getAnnotation(Dependency.class);
 	if (dependency != null) {
 		for (String dependentTest : dependency.value()) {
 			String formalizedDependentTest =
@@ -936,7 +936,7 @@ private void verifyDependencies(final FrameworkMethod frameworkMethod, final Obj
 			// Throw an appropriate exception if the dependent test was not run, failed or ignored.
 			Boolean testResult = this.testResults.get(formalizedDependentTest);
 			if((testResult == null) || !testResult.booleanValue()) {
-				throw new AssumptionViolatedException("Passing of test '" + formalizedDependentTest + "' was a prerequisite for this test, but the dependent test failed, ignored or did not run");
+				throw new TestAbortedException("Passing of test '" + formalizedDependentTest + "' was a prerequisite for this test, but the dependent test failed, ignored or did not run");
 			}
 		}
 	}

@@ -13,13 +13,9 @@
  *********************************************************************/
 package itest.cloud.ibm.test.step.wxbi;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.*;
 
 import itest.cloud.annotation.Dependency;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
 
 /**
@@ -38,8 +34,9 @@ import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public abstract class StepXX_DefaultKeyMetricTests extends WxbiTestScenarioStep {
 
 	private static final String TEST_CREATE_CONVERSATION = CLASS_INDICATOR_OF_DEPENDENCY + ".test02_CreateConversation";

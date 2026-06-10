@@ -15,15 +15,11 @@ package itest.cloud.ibm.test.step.wxbi;
 
 import static itest.cloud.ibm.entity.wxbi.conversation.WxbiVisualizationType.*;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.*;
 
 import itest.cloud.annotation.Dependency;
 import itest.cloud.ibm.entity.wxbi.conversation.WxbiQuestionAnswer;
 import itest.cloud.ibm.scenario.error.IncorrectAnswerError;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
 import itest.cloud.scenario.error.ScenarioFailedError;
 
@@ -53,8 +49,9 @@ import itest.cloud.scenario.error.ScenarioFailedError;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepB06_KasDemoQuestionsTests extends WxbiTestScenarioStep {
 
 	private static final String QUESTION_WHICH_PRODUCT_HAS_BEST_SALES_IN_THAT_REGION = "Which product has the best sales in that region?";

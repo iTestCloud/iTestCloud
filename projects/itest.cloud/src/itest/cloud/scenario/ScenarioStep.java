@@ -15,10 +15,10 @@ package itest.cloud.scenario;
 
 import static itest.cloud.scenario.ScenarioUtil.*;
 
-import org.junit.*;
-import org.junit.runners.Suite.SuiteClasses;
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.Statement;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.suite.api.Suite;
 
 import itest.cloud.browser.Browser;
 import itest.cloud.config.Config;
@@ -30,7 +30,7 @@ import itest.cloud.topology.Topology;
  * Manage a list of tests to execute in a scenario step.
  * <p>
  * Scenario may have several steps which are defined using a specific {@link ScenarioRunner}
- * and a list of classes as argument of {@link SuiteClasses} annotation.
+ * and a list of classes as argument of {@link Suite} annotation.
  * </p><p>
  * The step provides easy access to scenario configuration and data through its
  * {@link ScenarioExecution} stored instance.
@@ -45,41 +45,13 @@ import itest.cloud.topology.Topology;
  * </p>
  * Design: To be finalized
  */
+@ExtendWith(ScenarioStepExtension.class)
 public class ScenarioStep {
-
-	class ScenarioStepRule implements org.junit.rules.MethodRule {
-
-		final class ScenarioStepRuleStatement extends Statement {
-			private final FrameworkMethod method;
-			private final Statement statement;
-			private final Object target;
-
-			ScenarioStepRuleStatement(final Statement statement, final FrameworkMethod method, final Object target) {
-				this.statement = statement;
-				this.method = method;
-				this.target = target;
-			}
-
-			@Override
-			public void evaluate() throws Throwable {
-				ScenarioStep.this.scenarioExecution.runTest(this.statement, this.method, this.target, IS_NEW_STEP);
-			}
-
-			public void setExecution(final ScenarioExecution execution) {
-				ScenarioStep.this.scenarioExecution = execution;
-			}
-		}
-
-		@Override
-		public Statement apply(final Statement statement, final FrameworkMethod method, final Object target) {
-			return new ScenarioStepRuleStatement(statement, method, target);
-		}
-	}
 
 	// Step info
 	protected static boolean IS_NEW_STEP = true;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpStep() {
 		IS_NEW_STEP = true;
 	}
@@ -87,8 +59,7 @@ public class ScenarioStep {
 	// Execution
 	protected ScenarioExecution scenarioExecution;
 
-	@Rule
-	public ScenarioStepRule stepRule = new ScenarioStepRule();
+
 
 /**
  * @see Config#getBrowser()
@@ -173,7 +144,7 @@ protected Topology getTopology() {
 // * title in the console.
 // * </p>
 // */
-//@Before
+//@BeforeEach
 //public void setUpTest() {
 //
 //	// Print step title
@@ -207,7 +178,7 @@ public void sleepIfSlowServer(final int time) {
  * scenario execution to pass it to next test.
  * </p>
  */
-@After
+@AfterEach
 public void tearDownTest() throws Exception {
 	IS_NEW_STEP = false;
 }

@@ -13,13 +13,9 @@
  *********************************************************************/
 package itest.cloud.ibm.test.step.wxbi;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.*;
 
 import itest.cloud.annotation.Dependency;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
 
 /**
@@ -40,8 +36,9 @@ import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepB03_GreenThreadTests extends WxbiTestScenarioStep {
 
 	private static final String TEST_CREATE_CONVERSATION = CLASS_INDICATOR_OF_DEPENDENCY + ".test00_CreateConversation";
@@ -110,7 +107,7 @@ public void test02_QuestionWhichProductHasBestSalesInRegionCentralEurope() {
 // * </p>
 // */
 //@Test
-//@Ignore
+//@Disabled
 //@Dependency({CREATE_CONVERSATION_TEST})
 //public void test03_SubmitQuestionWhatIsAverageSalesForProduct3212762990InCanada() {
 //	submitQuestion(QUESTION_WHAT_IS_AVERAGE_SALES_FOR_PRODUCT_3212762990_IN_CANADA, ANSWER_WHAT_IS_AVERAGE_SALES_FOR_PRODUCT_3212762990_IN_CANADA);

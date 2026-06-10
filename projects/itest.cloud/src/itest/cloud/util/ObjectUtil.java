@@ -15,7 +15,7 @@ package itest.cloud.util;
 
 import java.util.regex.Pattern;
 
-import junit.framework.AssertionFailedError;
+import org.opentest4j.AssertionFailedError;
 
 /**
  * Utility class consisting of {@code static} utility methods for operating on objects.

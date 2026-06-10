@@ -13,16 +13,12 @@
  *********************************************************************/
 package itest.cloud.ibm.test.scenario.wxbi;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
 import itest.cloud.annotation.Scenario;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioRunner;
 import itest.cloud.ibm.test.step.wxbi.StepA01_PrerequisiteTests;
 
 @Scenario("WatsonX BI Assistant Regression Scenario Part 3")
-@RunWith(IbmTestScenarioRunner.class)
-@SuiteClasses({
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({
 	StepA01_PrerequisiteTests.class,
 
 //	StepD01_KeyMetricRevenueByTimeTests.class,

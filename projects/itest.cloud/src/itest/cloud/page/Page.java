@@ -28,7 +28,7 @@ import java.net.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 
@@ -628,7 +628,7 @@ protected BrowserElement check(final By locator, final boolean on, final boolean
  */
 public <P extends LinkHoverElement<? extends Page>> P checkHoverTitle(final BrowserElement linkElement, final Class<P> hoverClass) {
 	if (DEBUG) debugPrintln("		+ Check hover on "+linkElement+" using "+hoverClass);
-	Assert.assertNotNull("Cannot hover on a null element.", linkElement);
+	Assertions.assertNotNull(linkElement, "Cannot hover on a null element.");
 
 	// Get hover
 	P hover = hoverOverLink(linkElement, hoverClass);
@@ -681,7 +681,7 @@ protected void checkLoadingErrors() {
  */
 public <RH extends RichHoverElement<? extends Page>> RH checkRichHover(final BrowserElement linkElement, final Class<RH> richHoverClass, final String... pageData) {
 	if (DEBUG) debugPrintln("		+ Check rich hover on "+linkElement+" using "+richHoverClass);
-	Assert.assertNotNull("Cannot hover on a null element.", linkElement);
+	Assertions.assertNotNull(linkElement, "Cannot hover on a null element.");
 
 	// Get hover
 	RH richHover = richHoverOverLink(linkElement, richHoverClass, pageData);

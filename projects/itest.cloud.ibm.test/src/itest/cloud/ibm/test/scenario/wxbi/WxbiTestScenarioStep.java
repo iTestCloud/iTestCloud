@@ -17,8 +17,6 @@ import static itest.cloud.ibm.entity.wxbi.conversation.WxbiVisualizationType.get
 
 import java.util.List;
 
-import org.junit.runner.RunWith;
-
 import itest.cloud.ibm.entity.wxbi.conversation.WxbiQuestionAnswer;
 import itest.cloud.ibm.entity.wxbi.conversation.WxbiVisualizationType;
 import itest.cloud.ibm.page.dialog.wxbi.WxbiKeyMetricDialog;
@@ -29,12 +27,12 @@ import itest.cloud.ibm.scenario.error.IncorrectContextError;
 import itest.cloud.ibm.scenario.wxbi.WxbiScenarioStep;
 import itest.cloud.ibm.test.scenario.IbmTestScenarioData;
 import itest.cloud.ibm.test.scenario.IbmTestScenarioExecution;
-import itest.cloud.scenario.ScenarioStepRunner;
 
 /**
  * Manage common functionalities of the WXBI scenario steps.
  */
-@RunWith(ScenarioStepRunner.class)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 public class WxbiTestScenarioStep extends WxbiScenarioStep implements WxbiTestScenarioConstants {
 
 protected void switchThroughVisualizationsOfKeyMetric(final String keyMetric) {

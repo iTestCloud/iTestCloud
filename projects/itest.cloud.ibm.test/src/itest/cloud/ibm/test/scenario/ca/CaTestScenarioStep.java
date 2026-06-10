@@ -13,17 +13,15 @@
  *********************************************************************/
 package itest.cloud.ibm.test.scenario.ca;
 
-import org.junit.runner.RunWith;
-
 import itest.cloud.ibm.scenario.ca.CaScenarioStep;
 import itest.cloud.ibm.test.scenario.IbmTestScenarioData;
 import itest.cloud.ibm.test.scenario.IbmTestScenarioExecution;
-import itest.cloud.scenario.ScenarioStepRunner;
 
 /**
  * Manage common functionalities of the CA scenario steps.
  */
-@RunWith(ScenarioStepRunner.class)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 public class CaTestScenarioStep extends CaScenarioStep implements CaTestScenarioConstants {
 
 /**

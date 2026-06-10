@@ -15,12 +15,10 @@ package itest.cloud.ibm.test.step.wxbi;
 
 import static itest.cloud.ibm.entity.wxbi.conversation.WxbiVisualizationType.BAR_STACKED;
 
-import org.junit.FixMethodOrder;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import itest.cloud.ibm.entity.wxbi.conversation.WxbiVisualizationType;
-import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
 
 /**
  * This class defines a set of tests on pinning Bar Stacked type visualizations in the carousel.
@@ -31,8 +29,9 @@ import itest.cloud.ibm.test.scenario.IbmTestScenarioStepRunner;
  * </ul>
  * </p>
  */
-@RunWith(IbmTestScenarioStepRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@org.junit.platform.suite.api.Suite
+@org.junit.platform.suite.api.SelectClasses({/* TODO */})
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepC11_PinningVisualizationOfTypeBarStackedInCarouselTests extends StepXX_PinningVisualizationInCarouselTests {
 
 @Override
