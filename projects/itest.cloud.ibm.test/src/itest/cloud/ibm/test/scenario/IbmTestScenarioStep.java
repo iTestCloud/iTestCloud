@@ -18,8 +18,6 @@ import itest.cloud.ibm.scenario.IbmScenarioStep;
 /**
  * Manage common functionalities to any scenario step.
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 public class IbmTestScenarioStep extends IbmScenarioStep implements IbmTestScenarioConstants {
 
 /**

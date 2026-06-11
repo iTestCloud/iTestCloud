@@ -34,8 +34,6 @@ import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
  * </ul>
  * </p>
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public abstract class StepXX_DefaultKeyMetricTests extends WxbiTestScenarioStep {
 

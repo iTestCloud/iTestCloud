@@ -31,8 +31,6 @@ import itest.cloud.ibm.test.scenario.IbmTestScenarioExecution;
 /**
  * Manage common functionalities of the WXBI scenario steps.
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 public class WxbiTestScenarioStep extends WxbiScenarioStep implements WxbiTestScenarioConstants {
 
 protected void switchThroughVisualizationsOfKeyMetric(final String keyMetric) {

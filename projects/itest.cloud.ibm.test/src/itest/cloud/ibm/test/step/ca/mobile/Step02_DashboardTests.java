@@ -30,8 +30,6 @@ import itest.cloud.ibm.scenario.ca.mobile.CaMobileScenarioStep;
  * </ul>
  * </p>
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class Step02_DashboardTests extends CaMobileScenarioStep {
 

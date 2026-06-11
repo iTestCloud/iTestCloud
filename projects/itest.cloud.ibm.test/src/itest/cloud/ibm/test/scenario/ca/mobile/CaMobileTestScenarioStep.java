@@ -20,8 +20,6 @@ import itest.cloud.ibm.test.scenario.IbmTestScenarioExecution;
 /**
  * Manage common functionalities of the CA scenario steps.
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 public class CaMobileTestScenarioStep extends CaMobileScenarioStep implements CaMobileTestScenarioConstants {
 
 /**

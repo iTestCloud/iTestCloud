@@ -26,8 +26,6 @@ import itest.cloud.ibm.test.scenario.ca.CaTestScenarioStep;
  * </ul>
  * </p>
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class Step01_PrerequisitesTests extends CaTestScenarioStep {
 

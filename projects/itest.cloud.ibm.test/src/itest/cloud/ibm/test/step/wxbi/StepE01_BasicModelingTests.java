@@ -34,8 +34,6 @@ import itest.cloud.ibm.test.scenario.wxbi.WxbiTestScenarioStep;
  * </p>
  */
 @CloudTest
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepE01_BasicModelingTests extends WxbiTestScenarioStep {
 

@@ -49,8 +49,6 @@ import itest.cloud.scenario.error.ScenarioFailedError;
  * </ul>
  * </p>
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepB06_KasDemoQuestionsTests extends WxbiTestScenarioStep {
 

@@ -28,8 +28,6 @@ import itest.cloud.ibm.annotation.wxbi.CloudTest;
  * </p>
  */
 @CloudTest
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepD01_KeyMetricRevenueByTimeTests extends StepXX_DefaultKeyMetricTests {
 

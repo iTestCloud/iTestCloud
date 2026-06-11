@@ -29,8 +29,6 @@ import itest.cloud.ibm.entity.wxbi.conversation.WxbiVisualizationType;
  * </ul>
  * </p>
  */
-@org.junit.platform.suite.api.Suite
-@org.junit.platform.suite.api.SelectClasses({/* TODO */})
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class StepC18_PinningVisualizationOfTypeDecisionTreeInCarouselTests extends StepXX_PinningVisualizationInCarouselTests {
 
