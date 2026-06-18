@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Para Bank Page Objects
+Bundle-SymbolicName: itest.cloud.parabank
+Bundle-Vendor: iTestCloud
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: itest.cloud;bundle-version="1.0.0";visibility:=reexport
+Automatic-Module-Name: itest.cloud.ibm
+Export-Package: itest.cloud.parabank.config,
+ itest.cloud.parabank.page,
+ itest.cloud.parabank.page.element,
+ itest.cloud.parabank.scenario,
+ itest.cloud.parabank.topology
