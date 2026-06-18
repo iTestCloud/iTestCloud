@@ -7,27 +7,27 @@ In general, much of our style and conventions mirror the
 [Code Conventions for the Java Programming Language](http://www.oracle.com/technetwork/java/codeconvtoc-136057.html)
 and [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html).
 
-## Table of contents
+### Table of Contents
 
-- [Coding style](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#coding-style)
-  - [Formatting](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#formatting)
-  - [Field, class, and method declarations](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#field-class-and-method-declarations)
-  - [Variable naming](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#variable-naming)
-  - [Method naming](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#method-naming)
-  - [Space pad operators and equals](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#space-pad-operators-and-equals)
-  - [Be explicit about operator precedence](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#be-explicit-about-operator-precedence)
-  - [Empty blocks: may be concise](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#empty-blocks:-may-be-concise)
-  - [Imports](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#imports)
-- [Best practices](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#best-practices)
-  - [Defensive programming](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#defensive-programming)
-  - [De-nest when it exceeds 3-deep](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#De-nest-when-it-exceeds-3-deep)
-  - [Clean code](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#clean-code)
-  - [Use newer/better libraries](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#use-newerbetter-libraries)
-  - [equals() and hashCode()](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#equals-and-hashcode)
-  - [TODOs](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#todos)
-  - [Obey the Law of Demeter](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#obey-the-law-of-demeter-lod)
-  - [Don't Repeat Yourself](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#dont-repeat-yourself-dry)
-  - [Avoid unnecessary code](https://github.com/IBM/iTestCloud/tree/master/docs/coding_style.md#avoid-unnecessary-code)
+* [🎨 Coding Style](#coding-style)
+  * [Formatting](#formatting)
+  * [Field, Class, and Method Declarations](#field-class-and-method-declarations)
+  * [Variable Naming](#variable-naming)
+  * [Method Naming](#method-naming)
+  * [Space Pad Operators and Equals](#space-pad-operators-and-equals)
+  * [Be Explicit About Operator Precedence](#be-explicit-about-operator-precedence)
+  * [Empty Blocks: May Be Concise](#empty-blocks-may-be-concise)
+  * [Imports](#imports)
+* [🧠 Best Practices](#best-practices)
+  * [Defensive Programming](#defensive-programming)
+  * [De-nest when it exceeds 3-deep](#de-nest-when-it-exceeds-3-deep)
+  * [Clean Code](#clean-code)
+  * [Use Newer/Better Libraries](#use-newerbetter-libraries)
+  * [equals() and hashCode()](#equals-and-hashcode)
+  * [TODOs](#todos)
+  * [Obey the Law of Demeter](#obey-the-law-of-demeter)
+  * [Don't Repeat Yourself](#dont-repeat-yourself-dry)
+  * [Avoid Unnecessary Code](#avoid-unnecessary-code)
 
 ## Coding style
 
@@ -1010,5 +1010,12 @@ try {
 ```
 
 ---
-**Documentation Navigation:**
-[Home](../README.md) | [Eclipse Setup](eclipse_setup.md) | [Browser Setup](browser_setup.md) | [Test Run Setup](test_run_setup.md) | [Eclipse Execution](eclipse_execution.md) | [Command Line Execution](cmdln_execution.md) | [Jenkins Execution](jenkins_execution.md) | [Jenkins Slave Setup](jenkins_slave_setup.md) | [Scenario Development](scenario_development.md) | [Test Scenarios](test_scenarios.md) | [Coding Style](coding_style.md) | [Javadoc Standards](javadoc_standards.md) | [License](../LICENSE)
+
+### 🌐 Documentation Navigation
+
+| 🚀 Getting Started | 🛠️ Configuration & Setup | 💻 Execution | 📚 reference: Reference |
+| :--- | :--- | :--- | :--- |
+| [🏠 Home](../README.md) | [🌙 Eclipse Setup](eclipse_setup.md) | [⚡ From Eclipse](eclipse_execution.md) | [📝 Scenario Development](scenario_development.md) |
+| | [🌐 Browser Setup](browser_setup.md) | [💻 Command Line](cmdln_execution.md) | [📋 Test Scenarios](test_scenarios.md) |
+| | [🔑 Test Run Setup](test_run_setup.md) | [⚙️ Jenkins CI](jenkins_execution.md) | [🎨 Coding Style](coding_style.md) |
+| | [🤖 Jenkins Slave Setup](jenkins_slave_setup.md) | | [📖 Javadoc Standards](javadoc_standards.md) \| [📄 License](../LICENSE) |

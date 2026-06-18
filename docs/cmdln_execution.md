@@ -1,33 +1,60 @@
-# Command Line Execution
+# 💻 Command Line Execution
 
-Executing tests from the command line allows for integration into CI/CD pipelines or headless server environments. 
+Executing test scenarios from the command line enables seamless integration into custom automation scripts, headless server environments, and CI/CD pipelines.
 
-## Using Standard Java Command
+---
 
-If your test environment is fully compiled and all dependencies are available in a directory (e.g., `lib/`), you can execute the JUnit test runner directly:
+### ☕ Running via Java CLI
+
+If your test environment is fully compiled and all required libraries reside in a dependencies directory (e.g., `lib/`), you can execute the JUnit test suite directly:
 
 ```bash
 java -cp "lib/*:target/classes" org.junit.runner.JUnitCore com.ibm.itest.cloud.YourTestSuite
 ```
 
-*Note: The classpath separator is `:` on Unix/Linux/macOS and `;` on Windows.*
+> [!IMPORTANT]
+> **Classpath Separators**
+> Use the appropriate classpath path separator for your operating system:
+> * **macOS & Linux:** Colon (`:`) &rarr; `-cp "lib/*:target/classes"`
+> * **Windows:** Semicolon (`;`) &rarr; `-cp "lib/*;target/classes"`
 
-## Passing System Properties
+---
 
-When running via command line, you can pass the same properties used in Eclipse VM arguments by using the `-D` flag:
+### ⚙️ Passing Runtime Properties
+
+You can customize the test execution context by passing system properties dynamically using the `-D` flag (equivalent to Eclipse VM arguments):
 
 ```bash
 java -DfirstStep=G02 -DfirstTest=07 -cp "lib/*:target/classes" org.junit.runner.JUnitCore com.ibm.itest.cloud.YourTestSuite
 ```
 
-## Build Automation Tools
+---
 
-If the project is later configured with a build tool like **Maven**, **Gradle**, or **Ant**, you can execute tests as follows:
+### 🛠️ Execution via Build Tools
 
-- **Maven:** `mvn clean test -Dtest=YourTestSuite -DargLine="-DfirstStep=G02"`
-- **Gradle:** `gradle test --tests "com.ibm.itest.cloud.YourTestSuite" -DfirstStep=G02`
-- **Ant:** Provide the target defined in your `build.xml`, e.g., `ant test`
+When the project has Maven, Gradle, or Ant build scripts defined, use the corresponding commands to execute tests:
+
+* **Maven:**
+  ```bash
+  mvn clean test -Dtest=YourTestSuite -DargLine="-DfirstStep=G02"
+  ```
+* **Gradle:**
+  ```bash
+  gradle test --tests "com.ibm.itest.cloud.YourTestSuite" -DfirstStep=G02
+  ```
+* **Ant:**
+  ```bash
+  ant test -DfirstStep=G02
+  ```
 
 ---
-**Documentation Navigation:**
-[Home](../README.md) | [Eclipse Setup](eclipse_setup.md) | [Browser Setup](browser_setup.md) | [Test Run Setup](test_run_setup.md) | [Eclipse Execution](eclipse_execution.md) | [Command Line Execution](cmdln_execution.md) | [Jenkins Execution](jenkins_execution.md) | [Jenkins Slave Setup](jenkins_slave_setup.md) | [Scenario Development](scenario_development.md) | [Test Scenarios](test_scenarios.md) | [Coding Style](coding_style.md) | [Javadoc Standards](javadoc_standards.md) | [License](../LICENSE)
+
+### 🌐 Documentation Navigation
+
+| 🚀 Getting Started | 🛠️ Configuration & Setup | 💻 Execution | 📚 reference: Reference |
+| :--- | :--- | :--- | :--- |
+| [🏠 Home](../README.md) | [🌙 Eclipse Setup](eclipse_setup.md) | [⚡ From Eclipse](eclipse_execution.md) | [📝 Scenario Development](scenario_development.md) |
+| | [🌐 Browser Setup](browser_setup.md) | [💻 Command Line](cmdln_execution.md) | [📋 Test Scenarios](test_scenarios.md) |
+| | [🔑 Test Run Setup](test_run_setup.md) | [⚙️ Jenkins CI](jenkins_execution.md) | [🎨 Coding Style](coding_style.md) |
+| | [🤖 Jenkins Slave Setup](jenkins_slave_setup.md) | | [📖 Javadoc Standards](javadoc_standards.md) \| [📄 License](../LICENSE) |
+

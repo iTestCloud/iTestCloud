@@ -1,65 +1,73 @@
-# Test Scenarios
-The following test scenarios have been developed with the iTestCloud Framework by a number of teams and individuals.
+# 📋 Test Scenarios & Coverage
 
-1. [Regression Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.regression)
-2. [Documentation Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.documentation)
-3. [Streaming Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.streams)
-4. [Exchange Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.exchange)
-5. [Catalog Scenario](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.catalog)
-
-## Test Coverage
-The following are the areas, features and/or use cases validated by the above mentioned test scenarios. 
-
-## Generic
-1. Validation of the home pages of the Data Hub and Data Science Experience
-2. User profile management and customization
-3. Object Storage creation, management, utilization and deletion
-4. Data-connection creation, management, sharing, utilization and deletion
-5. Creation, management, utilization and deletion of projects with Object Storage or catalogs
-6. Data connection inclusion, management and deletion within a project
-7. Collaborators inclusion, permission management and deletion within a project
-8. Validation for existence and deletion of bookmarks of community data sets, notebooks, articles and tutorials within a project
-9. Validation for existence and deletion of bookmarks of community data sets, notebooks, articles and tutorials within the Explore Community sidebar (menu)
-## Data Import
-1. Data services creation, management, utilization and deletion
-1. Data import from a CSV file on the local file system into a cloud data service
-1. Data import from a CSV file in the Object Storage into a cloud data service
-1. Data import from a cloud data service (Cloudant) into another cloud data service (dashDB) via a private data connection
-1. Data import from a cloud data service (Cloudant) into another cloud data service (dashDB) via a shared data connection by an alternate user
-
-### Catalogs
-1. Catalog creation, management, utilization and deletion 
-1. Data set with or without tags creation, management, utilization and deletion within a catalog
-1. Data set format validation and alteration within a catalog
-1. Visibility validation and alteration within a catalog
-1. Collaborators inclusion, permission management and deletion within a catalog
-1. Owner and administrators inclusion, management and deletion within a catalog
-1. Validation of the following charts in the Dashboards tab of populated and empty catalogs: Discovered Business Types, Business Type Fields, Catalog Statistics, Assets in Use, Top 10 Users, and Top 10 Assets.
-1. Inclusion of data sets in a catalog to a project
-1. Validation of the history of a catalog
-
-### Exchange
-1. Validation of following properties and features of the first 25 data sets, notebooks, articles and tutorials via their community cards in the Exchange: author, date, topic, level, format, like feature, and bookmarking feature
-1. Validation of following properties and features of the first 25 data sets, notebooks, articles and tutorials via their community pages in the Exchange: topic, last updated date, created date, publisher, preview, column details, like feature, shared link (permalink), and bookmarking feature
-
-### Documentation
-1. Validation of the following tabs: All, Get Started, Analyze Data, Manage Data, and Integrated Tools
-1. Validation of the tables of contents in the above mentioned tabs
-1. Opening of all articles in all tabs via the corresponding table of contents
-1. Opening various articles via their sharable URLs (permalinks)
-1. Locating and opening various articles by utilizing the search feature
-1. Locating and opening various articles by utilizing the Explore Community sidebar (menu)
-1. Opening various articles via their sharable URLs (permalinks)
-1. Validation of the like, book-marking, bread-crumb and go-to-top features
-
-### Streaming
-1. Message Hub service creation, management, utilization and deletion
-2. Validation of the Ingest Streaming Data tab
-3. Topic creation, management, and deletion within a Message Hub service instance
-
-### RStudio
-1. Validation for existence of various features such as disk usage bar, menu, and console
+The iTestCloud framework powers multiple specialized test scenarios created and maintained across different feature domains.
 
 ---
-**Documentation Navigation:**
-[Home](../README.md) | [Eclipse Setup](eclipse_setup.md) | [Browser Setup](browser_setup.md) | [Test Run Setup](test_run_setup.md) | [Eclipse Execution](eclipse_execution.md) | [Command Line Execution](cmdln_execution.md) | [Jenkins Execution](jenkins_execution.md) | [Jenkins Slave Setup](jenkins_slave_setup.md) | [Scenario Development](scenario_development.md) | [Test Scenarios](test_scenarios.md) | [Coding Style](coding_style.md) | [Javadoc Standards](javadoc_standards.md) | [License](../LICENSE)
+
+### 📂 Active Test Scenarios
+
+Below is the list of active scenario repositories:
+
+| Scenario Name | Description | Repository Link |
+| :--- | :--- | :--- |
+| **Regression Scenario** | Core UI regression suites validating workflows. | [com.ibm.itest.cloud.apsportal.regression](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.regression) |
+| **Documentation Scenario** | Verification of documentation tabs, links, and search indexing. | [com.ibm.itest.cloud.apsportal.documentation](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.documentation) |
+| **Streaming Scenario** | Validation of real-time streaming services and message brokers. | [com.ibm.itest.cloud.apsportal.streams](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.streams) |
+| **Exchange Scenario** | Verification of data sets, catalogs, notebooks, and community cards. | [com.ibm.itest.cloud.apsportal.exchange](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.exchange) |
+| **Catalog Scenario** | Comprehensive catalog asset, permission, and metric charting tests. | [com.ibm.itest.cloud.apsportal.catalog](https://<git-server>/iTestCloud/com.ibm.itest.cloud.apsportal.catalog) |
+
+---
+
+### 🎯 Functional Coverage Areas
+
+The test suites validate a broad matrix of features and use cases:
+
+#### 🌐 Generic & Core Features
+* Home page rendering and core navigation links.
+* User profile preferences and layout customizations.
+* Object Storage instance lifecycle (provisioning, credentials, and deletion).
+* Data connections creation, sharing across projects, and deletion.
+* Project configuration, collaborator invitation/access permissions, and bookmark synchronization.
+
+#### 📥 Data Import
+* Cloud data services lifecycle management.
+* Uploading local CSV resources into cloud data endpoints.
+* Transferring object storage CSV files to remote database tables.
+* Executing cross-service replication (e.g., Cloudant database to dashDB) using Shared/Private credentials.
+
+#### 🗃️ Catalogs
+* Catalog lifecycle validation.
+* Asset creation and tagging (both structured and unstructured files).
+* Format detection and privacy controls (public/private catalogs).
+* Member permissions (viewers vs. editors) and admin roles.
+* Dashboard telemetry reporting (e.g., *Discovered Business Types*, *Top 10 Assets*, *Active Users*).
+* Integration pipelines linking catalog assets to projects.
+
+#### 🛍️ Exchange
+* Card validation (publisher metadata, creation timestamps, and bookmark options) on the first 25 datasets.
+* Deep page verification (preview loaders, schema info, and permalinks).
+
+#### 📖 Documentation & Help Centers
+* Validation of user guide tabs (e.g. *Get Started*, *Analyze Data*, *Manage Data*).
+* Table of contents traversal and dead-link validation.
+* Article search performance and lookup via permalinks.
+* Interactive UI widgets (e.g., "Like", "Bookmark", breadcrumbs, and "Go to Top" button).
+
+#### ⚡ Streaming
+* Message Hub cluster provisioning, configuration parameters, and removal.
+* Ingestion pipelines validation.
+* Topic replication and message delivery checks.
+
+#### 💻 RStudio Integration
+* Verification of integrated workspace setups (e.g., storage indicators, terminal, and console).
+
+---
+
+### 🌐 Documentation Navigation
+
+| 🚀 Getting Started | 🛠️ Configuration & Setup | 💻 Execution | 📚 reference: Reference |
+| :--- | :--- | :--- | :--- |
+| [🏠 Home](../README.md) | [🌙 Eclipse Setup](eclipse_setup.md) | [⚡ From Eclipse](eclipse_execution.md) | [📝 Scenario Development](scenario_development.md) |
+| | [🌐 Browser Setup](browser_setup.md) | [💻 Command Line](cmdln_execution.md) | [📋 Test Scenarios](test_scenarios.md) |
+| | [🔑 Test Run Setup](test_run_setup.md) | [⚙️ Jenkins CI](jenkins_execution.md) | [🎨 Coding Style](coding_style.md) |
+| | [🤖 Jenkins Slave Setup](jenkins_slave_setup.md) | | [📖 Javadoc Standards](javadoc_standards.md) \| [📄 License](../LICENSE) |

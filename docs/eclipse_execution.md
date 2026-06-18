@@ -1,13 +1,38 @@
-# Eclipse Execution
+# ⚡ Eclipse Execution
 
-Once a test scenario has been developed, you are ready to execute the particular test scenario. You may do so in Eclipse by launching the scenario via an appropriate launch configuration as shown below.
-
-<img src="../images/eclipse_run_dialog.png" alt="Eclipse Run Dialog" height="500"/>
-
-Users for running the tests are typically defined in `scenario.properties`. To avoid conflicts if tests are run by two or more users at the same time, you may want to change the `TestUser` (or Admin user) to yourself. For encrypting your password safely instead of using plain text, please refer to the **Encrypt your password** section in the [Test Run Setup guide](test_run_setup.md).
-
-For your specific project's `scenario.properties`, be sure to set properties like `organization` and `space` (or equivalent environment settings) to your personal values.
+Once you have developed a test scenario, you can execute it within Eclipse by launching the scenario using the corresponding JUnit launch configuration.
 
 ---
-**Documentation Navigation:**
-[Home](../README.md) | [Eclipse Setup](eclipse_setup.md) | [Browser Setup](browser_setup.md) | [Test Run Setup](test_run_setup.md) | [Eclipse Execution](eclipse_execution.md) | [Command Line Execution](cmdln_execution.md) | [Jenkins Execution](jenkins_execution.md) | [Jenkins Slave Setup](jenkins_slave_setup.md) | [Scenario Development](scenario_development.md) | [Test Scenarios](test_scenarios.md) | [Coding Style](coding_style.md) | [Javadoc Standards](javadoc_standards.md) | [License](../LICENSE)
+
+### 🖥️ Launching Tests
+
+Open the **Run Configurations** or **Debug Configurations** dialog in Eclipse, locate your JUnit configuration, and click **Run**:
+
+<div align="center">
+  <img src="../images/eclipse_run_dialog.png" alt="Eclipse Run Dialog" height="420" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+</div>
+
+---
+
+### 🔑 User Configuration
+
+Users for executing the test suites are typically defined in `scenario.properties`. 
+
+> [!TIP]
+> **Avoid Resource Conflicts**
+> If multiple developers run tests simultaneously against the same environment, change the `TestUser` (or `Admin` user) to your own user account.
+> 
+> * For encrypting your password safely (rather than storing it in plain text), see the **Encrypt your password** section in the [Test Run Setup guide](test_run_setup.md).
+> * In your specific project's `scenario.properties`, ensure you configure parameters like `organization` and `space` (or equivalent target cloud environment properties) to your personal namespace.
+
+---
+
+### 🌐 Documentation Navigation
+
+| 🚀 Getting Started | 🛠️ Configuration & Setup | 💻 Execution | 📚 reference: Reference |
+| :--- | :--- | :--- | :--- |
+| [🏠 Home](../README.md) | [🌙 Eclipse Setup](eclipse_setup.md) | [⚡ From Eclipse](eclipse_execution.md) | [📝 Scenario Development](scenario_development.md) |
+| | [🌐 Browser Setup](browser_setup.md) | [💻 Command Line](cmdln_execution.md) | [📋 Test Scenarios](test_scenarios.md) |
+| | [🔑 Test Run Setup](test_run_setup.md) | [⚙️ Jenkins CI](jenkins_execution.md) | [🎨 Coding Style](coding_style.md) |
+| | [🤖 Jenkins Slave Setup](jenkins_slave_setup.md) | | [📖 Javadoc Standards](javadoc_standards.md) \| [📄 License](../LICENSE) |
+

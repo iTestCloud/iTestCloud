@@ -1,33 +1,51 @@
-# Test Run Setup
-This guide explains how to configure your environment for executing tests, particularly when you need to avoid conflicts with other users.
+# 🔑 Test Run Setup
 
-## Using a personal account for test execution
+This guide details how to configure credentials, set VM execution flags in Eclipse, and encrypt sensitive keys for test scenarios.
 
-To avoid conflicts on the cloud if tests are run by multiple users at the same time, you may want to conduct tests on a personal account.
+---
 
-1. Create a personal account on your application's test environment.
-2. Edit the `secret.properties` file to include your own account details:
-   - For **tester, tester2, authenticator, testUser:**
-     - `Username`: Your name
-     - `UserID`: Your email address
-     - `Email`: Your email address
-     - `Password`: Your encrypted password (see below)
-3. Add `-DobjectStorageName=CloudObjectStorage` to the scenario VM arguments in Eclipse if required by your application to create a new project.
+### 👤 Personal Account Configuration
 
-## Set up testing on a cluster
-Edit the cluster properties file (e.g., `cluster.properties`) with the corresponding cluster URL and credentials.
+Using a personal test account avoids resource contention on shared cloud environments when multiple developers or pipelines execute tests simultaneously.
 
-## Adjust Eclipse VM arguments
-Adjust the other VM arguments depending on what/how you want to test:
-- `-DfirstStep`: The step/test group you want to start from. E.g., `G02` (capitalization matters)
-- `-DfirstTest`: The specific test within a step/test group you want to start from. E.g., `07`
-- `-DrunDeepDiveTests`: Usually reserved for CI/CD environments (like Jenkins), when we want to comprehensively run the tests.
-- `-DstopOnFailure`: If you want to end the test executions on the first encountered failure.
-- `-DverifyDependencies`: If you want to check that a test case's dependent tests are met before running it. **Important:** When skipping test cases through `-DfirstStep`, dependent tests will not be met, so this verification should be set to `false` in many skipping situations.
+1. Create a personal test account in the target application's test instance.
+2. Edit your project's local `secret.properties` file with your account's properties:
+   * **Target Users:** `tester`, `tester2`, `authenticator`, `testUser`
+   * **Required properties:**
+     ```properties
+     Username=your_username
+     UserID=your_email@domain.com
+     Email=your_email@domain.com
+     Password=YOUR_ENCRYPTED_PASSWORD
+     ```
+3. If your application requires creating a new project in Object Storage, add the following property to your Eclipse Run Configuration VM arguments:
+   ```bash
+   -DobjectStorageName=CloudObjectStorage
+   ```
 
-## Encrypt your password
+---
 
-You can run a simple standalone Java program to encrypt your password for the `secret.properties` file:
+### ⚙️ Eclipse VM Arguments Reference
+
+You can pass system properties to fine-tune execution via Eclipse VM arguments:
+
+| VM Argument | Purpose / Description | Example |
+| :--- | :--- | :--- |
+| `-DfirstStep` | The test step/group to start execution from (case-sensitive). | `-DfirstStep=G02` |
+| `-DfirstTest` | The specific test number/identifier to start execution from. | `-DfirstTest=07` |
+| `-DstopOnFailure` | Terminate the entire run immediately upon the first failure. | `-DstopOnFailure=true` |
+| `-DrunDeepDiveTests`| Enables comprehensive deep-dive validation steps (typically used in CI). | `-DrunDeepDiveTests=true` |
+| `-DverifyDependencies`| Enforce that prerequisite dependent tests have succeeded before running. | `-DverifyDependencies=false` |
+
+> [!WARNING]
+> **Skipping Steps and Dependencies**
+> When skipping steps using `-DfirstStep`, prerequisite assertions may be skipped. Set `-DverifyDependencies=false` in these cases to prevent tests from failing setup checks.
+
+---
+
+### 🔒 Password Encryption Utility
+
+To protect credentials, encrypt your plain-text passwords before storing them in `secret.properties`. Use this simple Java class:
 
 ```java
 import com.ibm.itest.cloud.common.tests.utils.EncryptionUtils;
@@ -40,18 +58,26 @@ public class PasswordEncryptor {
 }
 ```
 
-## Useful keyboard shortcuts
+---
 
-### Eclipse
-**Searching for stuff:**
-- `Command/Ctrl` + `Shift` + `R`: Search for **files** in the workspace by typing part of their names.
-- `Command/Ctrl` + `Shift` + `T`: Search for **types** in the workspace by typing part of their names.
-- `Command/Ctrl` + `Option/Alt` + `G`: Search for **highlighted string** within all files of a workspace.
+### ⌨️ Useful Keyboard Shortcuts (Eclipse)
 
-**Managing your UI:**
-- `Command/Ctrl` + `W`: Close currently opened file
-- `Command/Ctrl` + `Shift` + `W`: Close all opened files
+| Action | macOS Shortcut | Windows / Linux Shortcut |
+| :--- | :--- | :--- |
+| **Search Workspace for Files** | `Cmd + Shift + R` | `Ctrl + Shift + R` |
+| **Search Workspace for Java Types** | `Cmd + Shift + T` | `Ctrl + Shift + T` |
+| **Search Workspace for Selected Text** | `Cmd + Option + G` | `Ctrl + Alt + G` |
+| **Close Current Editor** | `Cmd + W` | `Ctrl + W` |
+| **Close All Active Editors** | `Cmd + Shift + W` | `Ctrl + Shift + W` |
 
 ---
-**Documentation Navigation:**
-[Home](../README.md) | [Eclipse Setup](eclipse_setup.md) | [Browser Setup](browser_setup.md) | [Test Run Setup](test_run_setup.md) | [Eclipse Execution](eclipse_execution.md) | [Command Line Execution](cmdln_execution.md) | [Jenkins Execution](jenkins_execution.md) | [Jenkins Slave Setup](jenkins_slave_setup.md) | [Scenario Development](scenario_development.md) | [Test Scenarios](test_scenarios.md) | [Coding Style](coding_style.md) | [Javadoc Standards](javadoc_standards.md) | [License](../LICENSE)
+
+### 🌐 Documentation Navigation
+
+| 🚀 Getting Started | 🛠️ Configuration & Setup | 💻 Execution | 📚 reference: Reference |
+| :--- | :--- | :--- | :--- |
+| [🏠 Home](../README.md) | [🌙 Eclipse Setup](eclipse_setup.md) | [⚡ From Eclipse](eclipse_execution.md) | [📝 Scenario Development](scenario_development.md) |
+| | [🌐 Browser Setup](browser_setup.md) | [💻 Command Line](cmdln_execution.md) | [📋 Test Scenarios](test_scenarios.md) |
+| | [🔑 Test Run Setup](test_run_setup.md) | [⚙️ Jenkins CI](jenkins_execution.md) | [🎨 Coding Style](coding_style.md) |
+| | [🤖 Jenkins Slave Setup](jenkins_slave_setup.md) | | [📖 Javadoc Standards](javadoc_standards.md) \| [📄 License](../LICENSE) |
+
