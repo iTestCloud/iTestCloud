@@ -1,7 +1,0 @@
-*.class
-/bin/
-/debug/
-/screenshots/
-/downloads/
-/params/secret.properties
-.DS_Store
