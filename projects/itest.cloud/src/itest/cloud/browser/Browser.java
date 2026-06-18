@@ -216,7 +216,7 @@ public abstract class Browser implements SearchContext {
 	// Browser default download directory
 	public final static String BROWSER_DOWNLOAD_DIR_ID = "download.dir";
 	public final static String BROWSER_DOWNLOAD_DIR_VALUE = "downloads";
-	// Browser automatic scroll behaviour
+	// Browser automatic scroll behavior
 //	protected static final String ELEMENT_SCROLL_BEHAVIOR_ID = "elementScrollBehavior";
 //	protected static final String ELEMENT_SCROLL_BEHAVIOR_VALUE = "1";
 	// Screenshots directories

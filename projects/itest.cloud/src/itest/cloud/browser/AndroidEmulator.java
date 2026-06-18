@@ -54,7 +54,7 @@ void initDriver() {
 		"emulator-5554" /*deviceName*/, ANDROID.getName() /*platformName*/, ANDROID_DRIVER_NAME /*automationName*/);
 	// Specify the Android version used on the emulator. E.g. 16.
 	capabilities.setCapability("appium:platformversion", getParameterValue("platformVersion"));
-	// Specify the path to the Chrome Driver, which is used when dealing a WebView, if one is provided.
+	// Specify the path to the Chrome Driver, which is used when dealing with a WebView, if one is provided.
 	// Otherwise, Selenium will automatically download an appropriate version of the Chrome Driver based on
 	// the version of the browser in use within the WebView.
 	if(this.driverPath != null) {

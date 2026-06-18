@@ -153,7 +153,7 @@ public static <W extends AbstractWindow> W createInstance(final Page page, final
 		pageClass = (Class< ? extends Page>) pageClass.getSuperclass();
 	}
 
-	// No constructor were found, give up
+	// No constructor was found, give up
 	if (exception != null) {
 		throw exception;
 	}
