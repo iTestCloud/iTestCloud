@@ -1180,6 +1180,15 @@ public String getTextWhenVisible() {
 }
 
 /**
+ * Returns the value of the title attribute of the element.
+ *
+ * @return The value of the title attribute of the element as {@link String}.
+ */
+public String getTitleAttribute() {
+	return getAttributeValue("title");
+}
+
+/**
  * Return the wrapped {@link WebElement}.
  *
  * @return The wrapped web element as a {@link WebElement}.
