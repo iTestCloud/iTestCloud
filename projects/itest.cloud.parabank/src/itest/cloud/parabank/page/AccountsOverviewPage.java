@@ -18,13 +18,11 @@ import static java.util.regex.Pattern.quote;
 
 import java.util.regex.Pattern;
 
-import org.openqa.selenium.By;
-
 import itest.cloud.config.User;
 import itest.cloud.parabank.config.ParaBankConfig;
 
 /**
- * This class represents and manages the <a href="https://parabank.parasoft.com/parabank/index.htm">Home</a> Page.
+ * This class represents and manages the <a href="https://parabank.parasoft.com/parabank/overview.htm">Accounts Overview</a> Page.
  * <p>
  * Following public features are accessible on this page:
  * <ul>
@@ -33,23 +31,17 @@ import itest.cloud.parabank.config.ParaBankConfig;
  * Following private features are also defined or specialized by this page:
  * <ul>
  * <li>{@link #getExpectedTitle()}: Return the expected title for the current web page.</li>
- * <li>{@link #getTitleElementLocator()}: Return the title element locator.</li>
  * </ul>
  * </p>
  */
-public class HomePage extends ParaBankPage {
+public class AccountsOverviewPage extends ParaBankPage {
 
-public HomePage(final String url, final ParaBankConfig config, final User user) {
+public AccountsOverviewPage(final String url, final ParaBankConfig config, final User user) {
 	super(url, config, user);
 }
 
 @Override
 protected Pattern getExpectedTitle() {
-	return compile(quote("Welcome!"));
-}
-
-@Override
-protected By getTitleElementLocator() {
-	return By.xpath("//span[contains(@class,'greetingLabel')]");
+	return compile(quote("Accounts Overview"));
 }
 }

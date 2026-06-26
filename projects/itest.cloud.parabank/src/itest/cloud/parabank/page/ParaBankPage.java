@@ -14,8 +14,10 @@
 package itest.cloud.parabank.page;
 
 import static itest.cloud.parabank.page.element.ParaBankAlertElement.WEB_ALERT_ELEMENT_LOCATOR;
-import static itest.cloud.scenario.ScenarioUtil.DEBUG;
-import static itest.cloud.scenario.ScenarioUtil.debugPrintln;
+import static itest.cloud.scenario.ScenarioUtil.*;
+import static java.util.regex.Pattern.compile;
+import static java.util.regex.Pattern.quote;
+import static org.openqa.selenium.By.xpath;
 
 import java.net.*;
 import java.util.List;
@@ -30,7 +32,6 @@ import itest.cloud.page.element.BrowserElement;
 import itest.cloud.parabank.config.ParaBankConfig;
 import itest.cloud.parabank.config.ParaBankUser;
 import itest.cloud.parabank.page.element.ParaBankAlertElement;
-import itest.cloud.parabank.page.element.ParaBankDropdownlistElement;
 import itest.cloud.parabank.scenario.ParaBankScenarioUtil;
 import itest.cloud.parabank.scenario.error.ParaBankScenarioLoginError;
 import itest.cloud.parabank.topology.ParaBankTopology;
@@ -64,9 +65,8 @@ import itest.cloud.scenario.error.*;
  */
 public abstract class ParaBankPage extends Page {
 
-	private static final By NAMESPACE_DROPDOWN_LOCATOR = By.id("CAMNamespace");
-	private static final By USER_NAME_TEXT_FIELD_LOCATOR = By.id("CAMUsername");
-	private static final By NAVIGATION_TITLE_LINK_LOCATOR = By.xpath("//a[contains(@class,'header__name')]");
+	private static final By USER_NAME_TEXT_FIELD_LOCATOR = xpath("//*[@name='username']");
+	private static final By APPLICATION_TITLE_LINK_LOCATOR = xpath("//*[@class='logo']");
 
 public ParaBankPage(final String url, final ParaBankConfig config, final User user) {
 	super(url, config, user);
@@ -107,7 +107,7 @@ protected List<BrowserElement> getAlertWebElements(final Pattern pattern, final 
  * @return The title as {@link String}.
  */
 private String getApplicationTitle() {
-	return waitForElement(getApplicationTitleElementLocator()).getText();
+	return waitForElement(getApplicationTitleElementLocator()).getTitleAttribute();
 }
 
 /**
@@ -116,7 +116,7 @@ private String getApplicationTitle() {
  * @return The locator as {@link By}.
  */
 protected By getApplicationTitleElementLocator() {
-	return NAVIGATION_TITLE_LINK_LOCATOR;
+	return APPLICATION_TITLE_LINK_LOCATOR;
 }
 
 @Override
@@ -139,12 +139,16 @@ public ParaBankConfig getConfig() {
  * @return The expected title of the application as {@link String}.
  */
 protected Pattern getExpectedApplicationTitle() {
-	return CA.getTitle();
+	return compile(quote("ParaBank"));
+}
+
+private By getLeftNavigationOptionLocator(final String option) {
+	return xpath("//*[@id='leftPanel']//a[text()='" + option + "']");
 }
 
 @Override
 protected By getLoggedUserElementLocator() {
-	return By.xpath("//*[(@id='startupInfo') and contains(text(),'userName')]");
+	return xpath("//*[@id='leftPanel']//p");
 }
 
 private String getNormalizedUrlPath(final URL url) {
@@ -153,7 +157,7 @@ private String getNormalizedUrlPath(final URL url) {
 
 @Override
 protected By getTitleElementLocator() {
-	return By.xpath("//title");
+	return xpath("//*[@class='title']");
 }
 
 @Override
@@ -182,7 +186,7 @@ private boolean isApplicationTitleExpected() {
 
 @Override
 public boolean isInApplicationContext() {
-	return waitForElement(NAVIGATION_TITLE_LINK_LOCATOR, timeout(), false /*fail*/) != null;
+	return waitForElement(APPLICATION_TITLE_LINK_LOCATOR, timeout(), false /*fail*/) != null;
 }
 
 @Override
@@ -218,7 +222,7 @@ private boolean matchApplicationTitle() {
  */
 @Override
 protected boolean matchBrowserUrl() {
-	String url = getUrl();
+	final String url = getUrl();
 	// Special case when restarting FireFox after it has died or
 	// stating Chrome or Safari respectively.
 	if (url.equals("about:blank") || url.startsWith("data:") || url.startsWith("chrome:") || url.isEmpty()) {
@@ -227,8 +231,8 @@ protected boolean matchBrowserUrl() {
 
 	// Compare URL starts
 	try {
-		URL browserURL = URI.create(url).toURL();
-		URL pageURL = URI.create(this.location).toURL();
+		final URL browserURL = URI.create(url).toURL();
+		final URL pageURL = URI.create(this.location).toURL();
 		return browserURL.getProtocol().equals(pageURL.getProtocol()) &&
 		       browserURL.getHost().equals(pageURL.getHost()) &&
 		       browserURL.getPort() == pageURL.getPort() &&
@@ -253,12 +257,6 @@ protected boolean matchBrowserUrlPath(final String pageURL, final String browser
 	return pageURL.startsWith(browserURL) || browserURL.startsWith(pageURL);
 }
 
-@Override
-protected boolean matchDisplayedUser(final User user, final BrowserElement loggedUserElement) {
-	final String loggedUserInfo = loggedUserElement.getProperty("innerHTML");
-	return (loggedUserInfo != null) && loggedUserInfo.contains("\"userName\":\"" + user.getId() + "\"");
-}
-
 ///**
 // * Specifies whether it is a web page representing a server error.
 // *
@@ -269,6 +267,11 @@ protected boolean matchDisplayedUser(final User user, final BrowserElement logge
 //}
 
 @Override
+protected boolean matchDisplayedUser(final User user, final BrowserElement loggedUserElement) {
+	return loggedUserElement.getText().equals("Welcome " + user.getName());
+}
+
+@Override
 public boolean matchPage() {
 	return super.matchPage() && (!isApplicationTitleExpected() || matchApplicationTitle());
 }
@@ -276,11 +279,15 @@ public boolean matchPage() {
 /**
  * Open the 'Home' page by clicking on the application title link.
  *
- * @return The opened 'Home' page as a {@link WxbiHomePage}
+ * @return The opened 'Home' page as a {@link HomePage}
  */
 public HomePage openHomePage() {
 	if (DEBUG) debugPrintln("		+ Goto home page using application title link.");
-	return openPageUsingLink(NAVIGATION_TITLE_LINK_LOCATOR, HomePage.class);
+	return openPageUsingLink(APPLICATION_TITLE_LINK_LOCATOR, HomePage.class);
+}
+
+private <P extends ParaBankPage> P openPageUsingLeftNavigationPane(final String option, final Class<P> openedPageClass) {
+	return openPageUsingLink(getLeftNavigationOptionLocator(option), openedPageClass);
 }
 
 @Override
@@ -305,30 +312,19 @@ protected void performLogin(final User user) {
 		return;
 	}
 
-	// Check if selecting a name space if required.
-	final BrowserElement[] loginFormRelatedElements = waitForMultipleElements(NAMESPACE_DROPDOWN_LOCATOR, USER_NAME_TEXT_FIELD_LOCATOR);
-	if(loginFormRelatedElements[0] != null) {
-		final BrowserElement namespaceDropdownElement = loginFormRelatedElements[0];
-		// If reached here, it implies that selecting a name space is required. Therefore, do so.
-		final ParaBankDropdownlistElement namespaceListElement = new ParaBankDropdownlistElement(this, namespaceDropdownElement);
-		namespaceListElement.select(((ParaBankUser)user).getNamespace());
-	}
-
 	// Enter the user information.
-	final BrowserElement userNameElement = (loginFormRelatedElements[1] != null) ? loginFormRelatedElements[1] : waitForElement(USER_NAME_TEXT_FIELD_LOCATOR);
-	typeText(userNameElement, user.getId());
-	typeText(By.id("CAMPassword"), user.getPassword());
+	typeText(USER_NAME_TEXT_FIELD_LOCATOR, user.getId());
+	typeText(xpath("//*[@name='password']"), user.getPassword());
 	// Click the Login button.
-	clickButton(By.id("signInBtn"));
+	clickButton(xpath("//*[@value='Log In']"));
 
 	// Look for login errors and take an appropriate action.
 	final BrowserElement[] loginErrorRelatedElements = waitForMultipleElements(
-		new By[] {By.xpath("//*[contains(@class,'incorrectLogin')]//*[contains(@class,'_title')]"), getLoggedUserElementLocator()},
+		new By[] {xpath("//*[@class='error']"), getLoggedUserElementLocator()},
 		timeout(), true /*fail*/, new boolean[] {true, false} /*displayFlags*/);
-	final BrowserElement loggedUserElement = loginErrorRelatedElements[1];
-	if(loggedUserElement == null) {
+	final BrowserElement errorMessageElement = loginErrorRelatedElements[0];
+	if(errorMessageElement != null) {
 		// If a login error occurs, throw an exception.
-		final BrowserElement errorMessageElement = loginErrorRelatedElements[0];
 		throw new ParaBankScenarioLoginError("The following error occurred during log in operation: " + errorMessageElement.getText());
 	}
 
@@ -352,42 +348,46 @@ protected void performLogin(final User user) {
  */
 @Override
 protected void performLogout() {
-//	if (DEBUG) debugPrintln("		+ Logout current page from user '"+(getUser()==null?"null":getUser().getId())+"'");
-//
-//	// No logout necessary
-//	if (getUser() == null) {
-//		debugPrintln("		  -> Do nothing as there's no login");
-//		return;
-//	}
-//
-//	final CaProfileMenuElement profileMenuElement = openProfileMenu();
-//	profileMenuElement.logout();
-//
-//	// Wait for login button to reappear.
-//	// Sometimes a blank or error page is loaded due to various product defects.
-//	if(waitForMultipleElements(timeout(), false /*fail*/, getLoggedUserElementLocator(), NAMESPACE_DROPDOWN_LOCATOR, USER_NAME_TEXT_FIELD_LOCATOR) == null) {
-//		// A BrowserError must be raised in such a situation.
-//		throw new BrowserError("Web page '" + getUrl() + "' does not contain sign-in elements");
-//	}
-//
-//	this.refreshed = false;
-//
-//	// Discard the current browser session and open a new if it is a distributed
-//	// environment or requested to do so by user.
-//	if (getTopology().isDistributed() || this.browser.newSessionPerUser()) {
-//		println("		+ Closing browser session for " + getUser() + " and starting new session");
-//		startNewBrowserSession(); // Which also clears login data
-//	}
-//	else {
-//		// Clear login data
-//		getTopology().logoutApplications();
-//	}
+	if (DEBUG) debugPrintln("		+ Logout current page from user '" + (getUser( )== null ? "null" : getUser().getId()) + "'");
+
+	// No logout necessary
+	if (getUser() == null) {
+		debugPrintln("		  -> Do nothing as there's no login");
+		return;
+	}
+
+	// Select Log Out option from Left Navigation Pane.
+	selectLogOutOptionFromLeftNavigationPane();
+
+	// Wait for login button to reappear.
+	if(waitForElement(USER_NAME_TEXT_FIELD_LOCATOR, timeout(), false /*fail*/) == null) {
+		// Sometimes a blank or error page is loaded due to various product defects.
+		// A BrowserError must be raised in such a situation.
+		throw new BrowserError("Web page '" + getUrl() + "' does not contain sign-in elements");
+	}
+
+	this.refreshed = false;
+
+	// Discard the current browser session and open a new if it is a distributed
+	// environment or requested to do so by user.
+	if (getTopology().isDistributed() || this.browser.newSessionPerUser()) {
+		println("		+ Closing browser session for " + getUser() + " and starting new session");
+		startNewBrowserSession(); // Which also clears login data
+	}
+	else {
+		// Clear login data
+		getTopology().logoutApplications();
+	}
 }
 
 @Override
 public void prepare() {
 	//Dismiss alerts if exist.
 	dismissAlerts(false /*fail*/, true /*verbose*/);
+}
+
+private void selectLogOutOptionFromLeftNavigationPane() {
+	click(getLeftNavigationOptionLocator("Log Out"));
 }
 
 /**
